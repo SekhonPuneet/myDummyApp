@@ -53,7 +53,9 @@ workflows:
   heroku_deploy:
     jobs:
       - build
-      - deploy-staging
+      - deploy-staging:
+          requires:
+            - build
       - request-approval
       - hold:
           type: approval

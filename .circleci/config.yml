@@ -29,9 +29,9 @@ jobs:
           arguments: |
             --acl public-read \
             --cache-control "max-age=86400"
-          aws-access-key-id: 'AKIATYOBXDE5PM5BSBHV'
-          aws-region: us-east-1
-          aws-secret-access-key: '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'
+          aws-access-key-id: AWS_ACCESS_KEY_ID_BLUE
+          aws-region: AWS_REGION_BLUE
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY_BLUE
           from: bucket
           to: 's3://dummypuneetapp/prefix'
       - aws-s3/copy:
@@ -53,12 +53,13 @@ workflows:
   heroku_deploy:
     jobs:
       - build
+      - deploy-staging
       - request-approval
       - hold:
           type: approval
           requires:
             - build
-            - request-approval
+            - request-approval              
       - deploy-stuff:
           requires:
             - hold 

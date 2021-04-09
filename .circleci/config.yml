@@ -33,11 +33,11 @@ jobs:
           aws-region: AWS_REGION_BLUE
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY_BLUE
           from: bucket
-          to: 's3://dummypuneetapp'
+          to: 'S3://dummypuneetapp/x'
       - aws-s3/copy:
           arguments: '--dryrun'
           from: build/*
-          to: 's3://dummypuneetapp'      
+          to: 'S3://dummypuneetapp'     
   request-approval:
     docker:
       - image: circleci/node:4.8.2

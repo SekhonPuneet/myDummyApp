@@ -20,7 +20,24 @@ jobs:
           command: yarn build
       - store_artifacts:
           path: ~/tmp/build
-          destination: build        
+          destination: build
+  deploy-staging:
+    docker:
+      - image: circleci/node:4.8.2 
+    steps:
+      - aws-s3/sync:
+          arguments: |
+            --acl public-read \
+            --cache-control "max-age=86400"
+          aws-access-key-id: 'AKIATYOBXDE5PM5BSBHV'
+          aws-region: us-east-1
+          aws-secret-access-key: 'mApOJUr4lBQWVIGA0VcvAjqrNm5H6Ze57bZ1kQC/'
+          from: bucket
+          to: 's3://dummypuneetapp/prefix'
+      - aws-s3/copy:
+          arguments: '--dryrun'
+          from: build/*
+          to: 's3://dummypuneetapp'      
   request-approval:
     docker:
       - image: circleci/node:4.8.2

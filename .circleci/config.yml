@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  node: circleci/node@4.2.1
+  aws-s3: circleci/aws-s3@2.0.0
 jobs:
   build:
     docker:
@@ -20,9 +20,28 @@ jobs:
           command: yarn build
       - store_artifacts:
           path: ~/tmp/build
-          destination: build
+          destination: build        
+  request-approval:
+    docker:
+      - image: circleci/node:4.8.2
+    steps:
+      - run: echo "deploying to prod"
+  deploy-stuff:
+    docker:
+      - image: circleci/node:4.8.2   
+    steps:
+      - run: echo "Deploy stuff here"
 
 workflows:
   heroku_deploy:
     jobs:
-      - build  
+      - build
+      - request-approval
+      - hold:
+          type: approval
+          requires:
+            - build
+            - request-approval
+      - deploy-stuff:
+          requires:
+            - hold 

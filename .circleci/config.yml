@@ -3,9 +3,10 @@ orbs:
   node: circleci/node@4.2.1
 jobs:
   build:
-    - run:
-      name: build artifact
-      command: yarn build
+    steps:
+      - run:
+        name: build artifact
+        command: yarn build
   dependencies:
     steps:
       - checkout

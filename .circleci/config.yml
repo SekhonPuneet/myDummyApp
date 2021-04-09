@@ -19,7 +19,8 @@ jobs:
           name: Run tests
           command: yarn build
       - store_artifacts:
-          path: ~/tmp/build
+          path: ~/tmp/artifact
+          destination: build
 
 workflows:
   heroku_deploy:

@@ -10,10 +10,10 @@ jobs:
   dependencies:
     steps:
       - checkout
-        # install dependencies
-        - run:
-            name: Install Dependencies
-            command: yarn install
+      # install dependencies
+      - run:
+          name: Install Dependencies
+          command: yarn install
             
 workflows:
   node-build:

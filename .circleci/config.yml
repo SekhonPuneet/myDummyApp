@@ -2,18 +2,21 @@ version: 2.1
 orbs:
   node: circleci/node@4.2.1
 jobs:
-  build:    
+  build:
+    docker:
+      - image: cimg/base:2020.01
+    working_directory: ~/webapp
     steps:
       - checkout
       # install dependencies
       - run:
           name: Install Dependencies
-          command: npm install
+          command: yarn install
       - run:
           name: Run tests
-          command: npm run test
+          command: yarn build
 
 workflows:
   heroku_deploy:
     jobs:
-      - build  
+      - build 

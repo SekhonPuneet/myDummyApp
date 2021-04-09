@@ -3,21 +3,26 @@ orbs:
   node: circleci/node@4.2.1
 jobs:
   build:
-    steps:
-      - run:
-        name: build artifact
-        command: yarn build
-  dependencies:
+    docker:
+      - image: circleci/node:10.16.3
+    working_directory: ~/tmp
     steps:
       - checkout
-        # install dependencies
-        - run:
-            name: Install Dependencies
-            command: yarn install
-            
+      # install dependencies
+      - run:
+          name: Install Dependencies
+          command: yarn install
+      - run:
+          name: Run tests
+          command: yarn test
+      - run:
+          name: Run tests
+          command: yarn build
+      - store_artifacts:
+          path: ~/tmp/build
+          destination: build
+
 workflows:
-  node-build:
+  heroku_deploy:
     jobs:
-      - build
-        requires:
-            - dependencies
+      - build  

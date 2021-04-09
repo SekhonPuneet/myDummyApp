@@ -25,7 +25,8 @@ jobs:
     docker:
       - image: circleci/node:4.8.2 
     steps:
-      - aws-s3/sync:
+      - run: mkdir bucket && echo "lorem ipsum" > bucket/build_asset.txt
+      - aws-s3/sync:             
           arguments: |
             --acl public-read \
             --cache-control "max-age=86400"
@@ -36,7 +37,7 @@ jobs:
           to: 'S3://dummypuneetapp/x'
       - aws-s3/copy:
           arguments: '--dryrun'
-          from: build/*
+          from: bucket/build_asset.txt
           to: 'S3://dummypuneetapp'     
   request-approval:
     docker:

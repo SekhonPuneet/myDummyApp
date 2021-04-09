@@ -20,4 +20,4 @@ workflows:
     jobs:
       - build
         requires:
-            - dependencies
+          - dependencies
